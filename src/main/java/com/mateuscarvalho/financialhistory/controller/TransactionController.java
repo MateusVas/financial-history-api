@@ -43,8 +43,9 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.save(transactionDTO));
     }
 
-    /*@GetMapping("/async/all")
-    public ResponseEntity<List<TransactionDTO>> findAsync() {
-        return ResponseEntity.ok(transactionService.findAllAsync());
-    }*/
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
+        transactionService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

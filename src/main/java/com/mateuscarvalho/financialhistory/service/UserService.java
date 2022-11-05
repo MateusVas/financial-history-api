@@ -2,24 +2,33 @@ package com.mateuscarvalho.financialhistory.service;
 
 import com.mateuscarvalho.financialhistory.domain.UserEntity;
 import com.mateuscarvalho.financialhistory.dto.UserDTO;
-import com.mateuscarvalho.financialhistory.exception.BadRequestException;
 import com.mateuscarvalho.financialhistory.exception.NotFoundException;
 import com.mateuscarvalho.financialhistory.mapper.UserMapper;
 import com.mateuscarvalho.financialhistory.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Service
 public class UserService {
+
+    private final Logger logger = Logger.getLogger(UserService.class.getName());
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     UserMapper userMapper;
+
+    @Value("${async.milliseconds:5000}")
+    private Long asyncMilliseconds;
 
     public UserDTO findById(Long id) {
         return userMapper.userToDto(userRepository.findById(id)
@@ -31,7 +40,7 @@ public class UserService {
     }
 
     public boolean existsByEmailIgnoreCase(String email) {
-        return userRepository.existsByNameIgnoreCase(email);
+        return userRepository.existsByEmailIgnoreCase(email);
     }
 
     public UserDTO save(UserDTO userDTO) {
@@ -39,11 +48,15 @@ public class UserService {
         return userMapper.userToDto(saved);
     }
 
-    public void update(UserDTO userDTO) {
-        if (userDTO.getId() == null) {
-            throw new BadRequestException("User without id");
+    @Async("threadPoolTaskExecutor")
+    public void saveAsync(UserDTO userDTO) {
+        try {
+            logger.log(Level.INFO, "User save process started asynchronously!");
+            Thread.sleep(asyncMilliseconds);
+            userRepository.save(userMapper.dtoToUser(userDTO));
+        } catch (InterruptedException ex) {
+            logger.log(Level.SEVERE, ex.getMessage());
         }
-        userRepository.save(userMapper.dtoToUser(userDTO));
     }
 
     public void deleteById(Long id) {

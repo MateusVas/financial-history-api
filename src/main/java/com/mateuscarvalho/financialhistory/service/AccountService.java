@@ -9,9 +9,14 @@ import com.mateuscarvalho.financialhistory.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 @Service
 public class AccountService {
+
+    private final Logger logger = Logger.getLogger(AccountService.class.getName());
 
     @Autowired
     private AccountRepository accountRepository;
@@ -33,6 +38,7 @@ public class AccountService {
         AccountDTO accountDTO = findById(id);
         accountDTO.setBalance(value += accountDTO.getBalance());
         accountRepository.save(accountMapper.dtoToAccount(accountDTO));
+        logger.log(Level.INFO, "Deposit made successfully!");
     }
 
     public void deleteById(Long id) {

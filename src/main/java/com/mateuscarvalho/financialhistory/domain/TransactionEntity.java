@@ -1,7 +1,6 @@
 package com.mateuscarvalho.financialhistory.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import enums.TransactionType;
+import com.mateuscarvalho.financialhistory.enums.TransactionType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

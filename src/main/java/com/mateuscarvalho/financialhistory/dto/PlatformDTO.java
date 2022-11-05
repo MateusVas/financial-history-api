@@ -8,12 +8,15 @@ public class PlatformDTO {
 
     private String name;
 
+    private String module;
+
     public PlatformDTO() {
     }
 
-    public PlatformDTO(Long id, String name) {
+    public PlatformDTO(Long id, String name, String module) {
         this.id = id;
         this.name = name;
+        this.module = module;
     }
 
     public Long getId() {
@@ -30,5 +33,13 @@ public class PlatformDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 }

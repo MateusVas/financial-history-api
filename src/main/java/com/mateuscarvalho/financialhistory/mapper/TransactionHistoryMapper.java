@@ -1,11 +1,9 @@
 package com.mateuscarvalho.financialhistory.mapper;
 
-import com.mateuscarvalho.financialhistory.domain.AccountEntity;
 import com.mateuscarvalho.financialhistory.domain.TransactionHistoryEntity;
-import com.mateuscarvalho.financialhistory.dto.AccountDTO;
 import com.mateuscarvalho.financialhistory.dto.TransactionDTO;
 import com.mateuscarvalho.financialhistory.dto.TransactionHistoryDTO;
-import enums.TransactionType;
+import com.mateuscarvalho.financialhistory.enums.TransactionType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

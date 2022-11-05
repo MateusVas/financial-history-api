@@ -41,4 +41,12 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(new ExceptionDetails("The values entered are invalid!", "ERROR",
                 LocalDateTime.now(), ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<ExceptionDetails> sQLIntegrityConstraintViolationException(
+            SQLIntegrityConstraintViolationException ex) {
+        return new ResponseEntity<>(new ExceptionDetails(
+                "The resource cannot be deleted because it is referenced in other entities.!",
+                "ERROR", LocalDateTime.now(), ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
 }

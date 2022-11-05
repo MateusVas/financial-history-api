@@ -1,6 +1,6 @@
 package com.mateuscarvalho.financialhistory.dto;
 
-import enums.TransactionType;
+import com.mateuscarvalho.financialhistory.enums.TransactionType;
 
 import java.time.LocalDateTime;
 

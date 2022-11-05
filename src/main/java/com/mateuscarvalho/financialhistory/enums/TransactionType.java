@@ -1,4 +1,4 @@
-package enums;
+package com.mateuscarvalho.financialhistory.enums;
 
 public enum TransactionType {
     PIX,
